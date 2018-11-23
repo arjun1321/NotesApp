@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.arjunkumar.notesapp.database.model.Note;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database version
@@ -66,6 +69,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return note;
+    }
+
+    public List<Note> getAllNotes() {
+        List<Note> notes = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + Note.TABLE_NAME + " ORDER BY " + Note.COLUMN_TIMESTAMP + " DESC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Note note = new Note();
+                note.setId(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)));
+                note.setNote(cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)));
+                note.setTimestamp(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP)));
+
+                notes.add(note);
+            }while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        return notes;
     }
 
     
