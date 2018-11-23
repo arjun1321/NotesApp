@@ -1,5 +1,6 @@
 package com.example.arjunkumar.notesapp.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,4 +32,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Create table again
         db.execSQL(Note.CREATE_TABLE);
     }
+
+
+    public long InsertNote(String note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Note.COLUMN_NOTE, note);
+
+        long id = db.insert(Note.TABLE_NAME, null, values);
+        db.close();
+
+        return id;
+    }
+
+    
+
 }
