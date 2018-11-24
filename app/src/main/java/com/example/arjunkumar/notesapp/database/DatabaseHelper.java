@@ -108,4 +108,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    public int updateNote(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Note.COLUMN_NOTE, note.getNote());
+
+        return db.update(Note.TABLE_NAME, values, Note.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(note.getId())});
+    }
+
 }
