@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long InsertNote(String note) {
+    public long insertNote(String note) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
